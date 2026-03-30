@@ -1,0 +1,51 @@
+# Development overrides — automatically merged by Docker Compose.
+# No host PHP or Node required. Just run: docker compose up --build
+#
+# To run WITHOUT this override (production mode):
+#   docker compose -f compose.yml up --build
+
+x-dev-app: &dev-app
+  build:
+    context: .
+    target: development
+  volumes:
+    - .:/var/www/html
+    - vendor:/var/www/html/vendor
+
+services:
+  php:
+    <<: *dev-app
+    environment:
+      AUTORUN_ENABLED: "true"
+      AUTORUN_LARAVEL_OPTIMIZE: "false"
+      SSL_MODE: "off"
+      PHP_OPCACHE_ENABLE: "0"
+
+  horizon:
+    <<: *dev-app
+
+  reverb:
+    <<: *dev-app
+
+  scheduler:
+    <<: *dev-app
+
+  pulse:
+    <<: *dev-app
+
+  # ─── Vite Dev Server (HMR) ─────────────────────────────
+  node:
+    image: node:22-alpine
+    working_dir: /var/www/html
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    volumes:
+      - .:/var/www/html
+      - node_modules:/var/www/html/node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    networks:
+      - lelangfast
+
+volumes:
+  vendor:
+  node_modules:
