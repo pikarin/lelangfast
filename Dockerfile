@@ -1,7 +1,7 @@
 ############################################
 # Stage 1: Composer dependencies (prod)
 ############################################
-FROM serversideup/php:8.4-frankenphp AS deps
+FROM serversideup/php:8.5-frankenphp AS deps
 
 USER root
 
@@ -57,7 +57,7 @@ RUN npm run build
 ############################################
 # Stage 3: Production image
 ############################################
-FROM serversideup/php:8.4-frankenphp AS production
+FROM serversideup/php:8.5-frankenphp AS production
 
 # Set environment variables for serversideup
 ENV AUTORUN_ENABLED="true" \
@@ -83,7 +83,7 @@ EXPOSE 8080 8443
 ############################################
 # Stage 4: Development image
 ############################################
-FROM serversideup/php:8.4-frankenphp AS development
+FROM serversideup/php:8.5-frankenphp AS development
 
 ENV AUTORUN_ENABLED="true" \
     AUTORUN_LARAVEL_OPTIMIZE="false" \

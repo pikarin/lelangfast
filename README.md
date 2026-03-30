@@ -5,14 +5,14 @@
 | Layer | Technology | Version |
 |-------|-----------|---------|
 | **Backend** | Laravel | 13.x |
-| **PHP** | PHP (FrankenPHP) | 8.4 |
+| **PHP** | PHP (FrankenPHP) | 8.5 |
 | **Frontend** | Vite + Tailwind CSS | 8.x / 4.x |
 | **Real-time** | Laravel Reverb + Echo | 1.x / 2.x |
 | **Queue** | Laravel Horizon (Redis) | 5.x |
 | **Monitoring** | Laravel Pulse | 1.x |
 | **Database** | MySQL | 8.4 |
 | **Cache / Queue Driver** | Redis | 7.x |
-| **Web Server** | serversideup/php (FrankenPHP) | 8.4-frankenphp |
+| **Web Server** | serversideup/php (FrankenPHP) | 8.5-frankenphp |
 | **Testing** | Pest | 4.x |
 
 ## Local Development Setup
