@@ -5,6 +5,8 @@ FROM serversideup/php:8.5-frankenphp AS deps
 
 USER root
 
+RUN install-php-extensions intl
+
 WORKDIR /var/www/html
 
 # Copy composer files first for layer caching
@@ -59,6 +61,12 @@ RUN npm run build
 ############################################
 FROM serversideup/php:8.5-frankenphp AS production
 
+USER root
+
+RUN install-php-extensions intl
+
+USER www-data
+
 # Set environment variables for serversideup
 ENV AUTORUN_ENABLED="true" \
     SSL_MODE="off" \
@@ -84,6 +92,21 @@ EXPOSE 8080 8443
 # Stage 4: Development image
 ############################################
 FROM serversideup/php:8.5-frankenphp AS development
+
+USER root
+
+RUN install-php-extensions intl
+
+# Accept UID/GID from build args to match host user
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+
+# Remap www-data UID/GID at build time (unprivileged approach)
+RUN docker-php-serversideup-set-id www-data $USER_ID:$GROUP_ID && \
+    docker-php-serversideup-set-file-permissions --owner $USER_ID:$GROUP_ID
+
+# Drop back to unprivileged user
+USER www-data
 
 ENV AUTORUN_ENABLED="true" \
     AUTORUN_LARAVEL_OPTIMIZE="false" \

@@ -8,6 +8,9 @@ x-dev-app: &dev-app
   build:
     context: .
     target: development
+    args:
+      USER_ID: ${UID:-1000}
+      GROUP_ID: ${GID:-1000}
   volumes:
     - .:/var/www/html
     - vendor:/var/www/html/vendor
