@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use App\Jobs\ActivateScheduledAuctionsJob;
+use App\Jobs\CloseExpiredAuctionsJob;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+Schedule::job(new ActivateScheduledAuctionsJob)->everyMinute();
+Schedule::job(new CloseExpiredAuctionsJob)->everyMinute();
