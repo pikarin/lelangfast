@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Filament\Resources\Bids;
+
+use App\Filament\Resources\Bids\Pages\ListBids;
+use App\Filament\Resources\Bids\Tables\BidsTable;
+use App\Models\Bid;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+
+class BidResource extends Resource
+{
+    protected static ?string $model = Bid::class;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function table(Table $table): Table
+    {
+        return BidsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListBids::route('/'),
+        ];
+    }
+}
