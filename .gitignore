@@ -7,6 +7,7 @@
 .phpunit.result.cache
 CLAUDE.md
 .mcp.json
+/.intellipest
 /.devcontainer
 /.claude
 /.fleet
